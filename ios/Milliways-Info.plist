@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Milliways connects to the local demo API on your Mac during development and automated tests.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_http._tcp</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.testchimp.rum</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>testchimp-rum</string>
+			</array>
+		</dict>
+	</array>
+	<key>TestChimpApiKey</key>
+	<string>$(TESTCHIMP_API_KEY)</string>
+	<key>TestChimpBackendURL</key>
+	<string>$(TESTCHIMP_BACKEND_URL)</string>
+	<key>TestChimpEnvironment</key>
+	<string>$(TESTCHIMP_ENV)</string>
+	<key>TestChimpProjectId</key>
+	<string>$(TESTCHIMP_PROJECT_ID)</string>
+</dict>
+</plist>

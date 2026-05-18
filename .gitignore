@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Node / JavaScript
+dist/
+*.tsbuildinfo
+coverage/
+
+# Test runner outputs
+test-results/
+playwright-report/
+mobilewright-report/
+blob-report/
+
+# iOS / Xcode
+ios/build/
+DerivedData/
+*.xcarchive
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Android / Gradle
+android/.gradle/
+android/build/
+android/app/build/
+android/.kotlin/
+android/local.properties
+*.apk
+*.aab

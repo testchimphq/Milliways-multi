@@ -1,0 +1,2 @@
+## Copy to local.properties and set your Android SDK path (Android Studio installs under ~/Library/Android/sdk on macOS).
+sdk.dir=/Users/you/Library/Android/sdk

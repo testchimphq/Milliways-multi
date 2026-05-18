@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".MilliwaysApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher_vector"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_launcher_vector"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Milliways"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Milliways">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- TrueCoverage: Mobilewright / @testchimp/playwright opens testchimp-rum://truecoverage/v1/... -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="truecoverage"
+                    android:pathPrefix="/v1"
+                    android:scheme="testchimp-rum" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

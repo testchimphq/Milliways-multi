@@ -1,0 +1,15 @@
+{
+  "originHash" : "e9ecc96f2a4213fe5c184299fc57884429b419db8ca98545c0dfe46ab22f0fa3",
+  "pins" : [
+    {
+      "identity" : "testchimp-rum-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/testchimphq/testchimp-rum-ios.git",
+      "state" : {
+        "revision" : "228259b2218ddd7ea1b7feb696256bc451ea0d83",
+        "version" : "0.1.4"
+      }
+    }
+  ],
+  "version" : 3
+}
