@@ -1,0 +1,54 @@
+<div class="overlay" role="dialog" aria-modal="true" (click)="dismiss()">
+  <div class="sheet" (click)="$event.stopPropagation()">
+    <header>
+      <h2>Account</h2>
+      <button type="button" class="close" aria-label="Close" (click)="dismiss()">×</button>
+    </header>
+
+    <div class="profile">
+      <div class="profile-text">
+        <p class="email">{{ user?.email }}</p>
+        <p class="badge">Pro Cosmic Foodie</p>
+      </div>
+      <img class="avatar" src="assets/images/Avatar.jpg" alt="" />
+    </div>
+
+    <div class="stats">
+      <div>
+        <span class="value">{{ orders().length }}</span>
+        <span class="label">Orders</span>
+      </div>
+      <div>
+        <span class="value">₭{{ totalSpent() | number: '1.2-2' }}</span>
+        <span class="label">Total Spent</span>
+      </div>
+      <div>
+        <span class="value">19</span>
+        <span class="label">Light-years</span>
+      </div>
+    </div>
+
+    <section class="history">
+      <h3>Past Orders</h3>
+      @if (loading()) {
+        <p class="muted">Loading orders...</p>
+      } @else if (error()) {
+        <p class="err">{{ error() }}</p>
+      } @else if (orders().length === 0) {
+        <p class="muted">No orders yet</p>
+      } @else {
+        <ul>
+          @for (order of orders(); track order.id) {
+            <li>
+              <span>Order #{{ order.id }}</span>
+              <span class="status">{{ order.status }}</span>
+              <span class="amount">₭{{ order.totalCents / 100 | number: '1.2-2' }}</span>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <button type="button" class="btn-signout" (click)="signOut()">Sign Out</button>
+  </div>
+</div>

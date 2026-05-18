@@ -1,0 +1,77 @@
+<div class="order-page">
+  <header>
+    <a routerLink="/menu" class="back-link">← Menu</a>
+    <h1>Your Order</h1>
+  </header>
+
+  @if (lines().length === 0) {
+    <div class="empty">
+      <span class="cart-icon" aria-hidden="true">🛒</span>
+      <p>Your order is empty</p>
+    </div>
+    <footer class="footer">
+      <button type="button" class="btn-place disabled" disabled>Place Order</button>
+    </footer>
+  } @else {
+    <ul class="line-list">
+      @for (line of lines(); track line.id) {
+        <li>
+          <span class="swatch" [style.background]="itemColor(line.menuItem.color)"></span>
+          <div class="line-info">
+            <span class="name">{{ line.menuItem.name }}</span>
+            <span class="qty">{{ line.quantity }} × ₭{{ line.menuItem.price | number: '1.2-2' }}</span>
+          </div>
+          <span class="line-total">₭{{ line.quantity * line.menuItem.price | number: '1.2-2' }}</span>
+          <button type="button" class="delete" aria-label="Remove item" (click)="removeLine(line.id)">×</button>
+        </li>
+      }
+
+      @if (couponDiscount() > 0) {
+        <li class="coupon-row">
+          <span>Coupon {{ appliedCouponCode() }}</span>
+          <span class="discount">-₭{{ couponDiscount() | number: '1.2-2' }}</span>
+        </li>
+      }
+
+      <li class="total-row">
+        <span>Total</span>
+        <span [class.negative]="finalTotal() < 0">₭{{ finalTotal() | number: '1.2-2' }}</span>
+      </li>
+    </ul>
+
+    @if (!appliedCouponCode()) {
+      <div class="coupon-form">
+        <input
+          type="text"
+          [(ngModel)]="couponCode"
+          placeholder="Coupon code"
+          aria-label="Coupon code"
+          autocapitalize="characters"
+        />
+        <button type="button" (click)="applyCoupon()">Apply</button>
+        @if (couponError()) {
+          <p class="coupon-err">{{ couponError() }}</p>
+        }
+      </div>
+    }
+
+    @if (orderError()) {
+      <p class="order-err" role="alert">{{ orderError() }}</p>
+    }
+
+    <footer class="footer">
+      <button
+        type="button"
+        class="btn-place"
+        [disabled]="submitting()"
+        (click)="placeOrder()"
+      >
+        @if (submitting()) {
+          Placing order...
+        } @else {
+          Place Order
+        }
+      </button>
+    </footer>
+  }
+</div>

@@ -1,0 +1,41 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Create account</h1>
+    <p class="subtitle">Instant demo account — no email verification required.</p>
+
+    <label class="field">
+      <span>Email</span>
+      <input type="email" [(ngModel)]="email" name="email" autocomplete="email" aria-label="Email" />
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        autocomplete="new-password"
+        aria-label="Password"
+      />
+    </label>
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <button
+      type="button"
+      class="btn-primary"
+      [disabled]="loading() || !email.trim() || !password"
+      (click)="submit()"
+    >
+      @if (loading()) {
+        <span class="spinner" aria-hidden="true"></span>
+      } @else {
+        Sign Up
+      }
+    </button>
+
+    <a routerLink="/sign-in" class="link-secondary">Already have an account? Sign in</a>
+  </div>
+</div>

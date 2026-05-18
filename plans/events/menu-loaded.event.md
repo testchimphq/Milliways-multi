@@ -23,6 +23,6 @@ This captures the moment the user can browse purchasable items. It pairs **menu 
 |-----|---------|----------------|
 | `menu.section_count_bucket` | Number of menu sections returned | `0`, `1`, `2_5`, `6_plus` (from `MilliwaysRum.menuSectionCountBucket`) |
 | `cart.line_item_count_bucket` | Distinct line items in cart when menu loaded | `0`, `1`, `2_5`, `6_plus` (from `MilliwaysRum.lineItemCountBucket`) |
-| `platform` | Client platform | `ios` |
+| `platform` | Client platform | `ios`, `android`, `web` |
 
 Buckets are low-cardinality by design; no SKU or item IDs are emitted.

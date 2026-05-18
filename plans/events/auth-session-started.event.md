@@ -22,6 +22,6 @@ This marks the start of an authenticated session for the Milliways demo app. It 
 | Key | Meaning | Allowed values |
 |-----|---------|----------------|
 | `entry.auth_kind` | How the session was started | `sign_in`, `sign_up` (matches `AuthKind.rawValue` in iOS) |
-| `platform` | Client platform (merged by `MilliwaysRum.emit`) | `ios` |
+| `platform` | Client platform (merged by `MilliwaysRum.emit`) | `ios`, `android`, `web` |
 
 No user identifiers or free-text emails are emitted.

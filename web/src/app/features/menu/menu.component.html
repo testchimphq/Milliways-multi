@@ -1,0 +1,51 @@
+<div class="menu-page">
+  <header class="menu-header">
+    <a routerLink="/welcome" class="back-link">← Welcome</a>
+    <h1>Menu</h1>
+  </header>
+
+  @if (loading()) {
+    <p class="status">Loading menu...</p>
+  } @else if (error()) {
+    <div class="status error-box">
+      <p>{{ error() }}</p>
+      <button type="button" class="btn-primary" (click)="reload()">Try Again</button>
+    </div>
+  } @else {
+    <div class="sections">
+      @for (section of sections(); track section.title) {
+        <section>
+          <h2>{{ section.title }}</h2>
+          <div class="items">
+            @for (item of section.items; track item.id) {
+              <button type="button" class="menu-card" (click)="openItem(item)">
+                <span class="swatch" [style.background]="itemColor(item)"></span>
+                <div class="card-body">
+                  <span class="name">{{ item.name }}</span>
+                  <span class="price">₭{{ item.price | number: '1.2-2' }}</span>
+                  <span class="desc">{{ item.description }}</span>
+                </div>
+              </button>
+            }
+          </div>
+        </section>
+      }
+
+      <p class="disclaimer">* Shipping beyond 5 light-years distance might cost extra</p>
+    </div>
+  }
+
+  @if (cartLines().length > 0) {
+    <div class="cart-bar">
+      <button type="button" class="cart-bar-btn" (click)="viewOrder()">
+        <span class="label">View Order</span>
+        <span class="meta">{{ totalQuantity() }} items</span>
+        <span class="total">₭{{ totalPrice() | number: '1.2-2' }}</span>
+      </button>
+    </div>
+  }
+</div>
+
+@if (selectedItem(); as item) {
+  <app-menu-item-dialog [item]="item" (closed)="closeDialog()" />
+}

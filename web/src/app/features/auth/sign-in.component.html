@@ -1,0 +1,41 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Welcome to Milliways</h1>
+    <p class="subtitle">Sign in to order from the restaurant at the end of the universe.</p>
+
+    <label class="field">
+      <span>Email</span>
+      <input type="email" [(ngModel)]="email" name="email" autocomplete="email" aria-label="Email" />
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        autocomplete="current-password"
+        aria-label="Password"
+      />
+    </label>
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <button
+      type="button"
+      class="btn-primary"
+      [disabled]="loading() || !email.trim() || !password"
+      (click)="submit()"
+    >
+      @if (loading()) {
+        <span class="spinner" aria-hidden="true"></span>
+      } @else {
+        Sign In
+      }
+    </button>
+
+    <a routerLink="/sign-up" class="link-secondary">Create an account</a>
+  </div>
+</div>

@@ -1,0 +1,154 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.sheet {
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1rem 1.25rem 1.5rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .close {
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+  }
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  .email {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .badge {
+    margin: 0.25rem 0 0;
+    color: #ff8c00;
+    font-size: 0.9rem;
+  }
+
+  .avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff8c00;
+  }
+}
+
+.stats {
+  display: flex;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+
+  > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    border-right: 1px solid #eee;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    .value {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      color: #888;
+    }
+  }
+}
+
+.history {
+  h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 0.5rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+
+    .status {
+      text-transform: capitalize;
+      color: #666;
+    }
+
+    .amount {
+      font-weight: 600;
+    }
+  }
+}
+
+.muted {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.err {
+  color: #c62828;
+  font-size: 0.9rem;
+}
+
+.btn-signout {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #fff;
+  border: 1px solid #c62828;
+  color: #c62828;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #ffebee;
+  }
+}

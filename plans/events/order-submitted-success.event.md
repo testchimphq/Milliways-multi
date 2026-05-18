@@ -23,6 +23,6 @@ This is the primary **conversion** signal for the ordering journey: payment proc
 |-----|---------|----------------|
 | `cart.line_item_count_bucket` | Distinct line items at submit time | `0`, `1`, `2_5`, `6_plus` |
 | `order.has_coupon` | Whether a coupon was applied before submit | `true`, `false` (string values as emitted) |
-| `platform` | Client platform | `ios` |
+| `platform` | Client platform | `ios`, `android`, `web` |
 
 Coupon **codes** are not emitted—only the boolean slice. No order IDs or user identifiers.

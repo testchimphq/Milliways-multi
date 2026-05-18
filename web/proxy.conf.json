@@ -1,0 +1,22 @@
+{
+  "/auth": {
+    "target": "http://localhost:3001",
+    "secure": false
+  },
+  "/menu": {
+    "target": "http://localhost:3001",
+    "secure": false
+  },
+  "/orders": {
+    "target": "http://localhost:3001",
+    "secure": false
+  },
+  "/health": {
+    "target": "http://localhost:3001",
+    "secure": false
+  },
+  "/qa": {
+    "target": "http://localhost:3001",
+    "secure": false
+  }
+}

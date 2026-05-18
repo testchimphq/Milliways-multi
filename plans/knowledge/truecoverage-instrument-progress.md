@@ -1,6 +1,6 @@
 # TrueCoverage instrumentation progress
 
-Unified mobile project: `0853e684-9871-483a-bc71-ca84d922be7c` (staging).
+Multi-platform project: `161eddb8-16ef-4f47-b205-6caa5f03d5b9` (staging). Web RUM via `@testchimp/rum-js` in `web/`.
 
 ## Done (instrumented + `plans/events/*.event.md`)
 

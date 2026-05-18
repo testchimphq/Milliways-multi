@@ -1,0 +1,76 @@
+.welcome {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 1.5rem 2rem;
+}
+
+.account-btn {
+  align-self: flex-end;
+  background: rgba(0, 0, 0, 0.35);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
+
+h1 {
+  margin: 0.5rem 0 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-fg {
+  flex: 1;
+  max-width: min(420px, 90vw);
+  width: 100%;
+  object-fit: contain;
+  margin: 1rem 0;
+  transition: transform 2s ease-in-out;
+}
+
+.btn-cta {
+  width: 100%;
+  max-width: 280px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #ff8c00;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background: #e67e00;
+  }
+}

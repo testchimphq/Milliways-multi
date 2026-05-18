@@ -1,5 +1,7 @@
 # Dependencies
 node_modules/
+web/dist/
+web/.angular/
 
 # Node / JavaScript
 dist/

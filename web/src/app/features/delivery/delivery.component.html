@@ -1,0 +1,14 @@
+<div class="delivery">
+  <img class="nebula" src="assets/images/NebulaMap.jpg" alt="" />
+
+  <div class="content">
+    <h1>Your {{ headlineItem }} is on its way!</h1>
+    <p class="status">Status: {{ statusText() | titlecase }}</p>
+
+    <p class="countdown">
+      {{ minutesRemaining() | number: '1.8-8' }} minutes for delivery
+    </p>
+
+    <button type="button" class="close-btn" (click)="close()">Close</button>
+  </div>
+</div>

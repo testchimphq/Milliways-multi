@@ -287,10 +287,10 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TESTCHIMP_API_KEY = "b0e5e2bf-4e0e-40a2-8288-da324469d5c3";
+				TESTCHIMP_API_KEY = "0c06213f-b305-41b1-886d-f5edc96ea717";
 				TESTCHIMP_BACKEND_URL = "https://featureservice-staging.testchimp.io";
 				TESTCHIMP_ENV = staging;
-				TESTCHIMP_PROJECT_ID = "0853e684-9871-483a-bc71-ca84d922be7c";
+				TESTCHIMP_PROJECT_ID = "161eddb8-16ef-4f47-b205-6caa5f03d5b9";
 			};
 			name = Debug;
 		};
@@ -326,10 +326,10 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TESTCHIMP_API_KEY = "b0e5e2bf-4e0e-40a2-8288-da324469d5c3";
+				TESTCHIMP_API_KEY = "0c06213f-b305-41b1-886d-f5edc96ea717";
 				TESTCHIMP_BACKEND_URL = "https://featureservice-staging.testchimp.io";
 				TESTCHIMP_ENV = production;
-				TESTCHIMP_PROJECT_ID = "0853e684-9871-483a-bc71-ca84d922be7c";
+				TESTCHIMP_PROJECT_ID = "161eddb8-16ef-4f47-b205-6caa5f03d5b9";
 			};
 			name = Release;
 		};

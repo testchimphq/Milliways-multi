@@ -2,9 +2,10 @@
 
 ## Repo layout vs TestChimp mappings
 
-- **SmartTests root:** `tests/` (`.testchimp-tests`, `project_type=mobile`) — iOS + Android via Mobilewright `ios` / `android` projects.
-- **Plans root:** `plans/` (`.testchimp-plans`) — unified mobile TestChimp project.
-- **TestChimp project ID:** `0853e684-9871-483a-bc71-ca84d922be7c` (staging backend; single project for both platforms).
+- **App surfaces:** `web/` (Angular), `ios/`, `android/` — shared `backend/` API.
+- **SmartTests root:** `tests/` (to be scaffolded via `/testchimp test` — `project_type=multi-platform`).
+- **Plans root:** `plans/` (`.testchimp-plans`) — unified multi-platform TestChimp project.
+- **TestChimp project ID:** `161eddb8-16ef-4f47-b205-6caa5f03d5b9` (staging backend; web + iOS + Android).
 - **MCP / CLI / runner env:** repo-root `.cursor/mcp.json` → `TESTCHIMP_API_KEY`, `TESTCHIMP_BACKEND_URL` (staging). `npm run test:*` / `scripts/run-smarttests.sh` apply these to the Mobilewright child process automatically. Never commit keys.
 
 ## Init progress
@@ -32,11 +33,12 @@
 
 ### Local - Test Authoring
 
-SmartTests root is **`tests/`** at the **repo root** (not under `ios/`).
+SmartTests root is **`tests/`** at the **repo root** (scaffold via `/testchimp test`; `project_type=multi-platform`).
 
 1. **Backend** (repo root): `docker compose up --build -d` then `curl -fsS http://localhost:3001/health`
-2. **iOS app:** `cd ios && make build` → `ios/build/Build/Products/Debug-iphonesimulator/Milliways.app`
-3. **Android APK:** `cd android && ./gradlew :app:assembleDebug`
+2. **Web app:** `cd web && npm install && npm start` → `http://localhost:4200` (proxies API to `:3001`)
+3. **iOS app:** `cd ios && make build` → `ios/build/Build/Products/Debug-iphonesimulator/Milliways.app`
+4. **Android APK:** `cd android && ./gradlew :app:assembleDebug`
 4. **Run** (repo root — recommended):
 
 ```bash
@@ -56,7 +58,7 @@ npm run test:android
 
 Overrides: `IOS_APP_PATH`, `ANDROID_APK_PATH`, `MILLIWAYS_API_BASE_URL` (`tests/.env-QA`).
 
-RUM: `android/gradle.properties` + Xcode `TESTCHIMP_*` build settings.
+RUM: `web/src/environments/*.ts` (`@testchimp/rum-js`), `android/gradle.properties`, Xcode `TESTCHIMP_*` build settings. Web emits use `platform: web`.
 
 ### CI - Test Execution
 
@@ -64,7 +66,7 @@ Deferred. When enabled, use macOS for iOS Simulator + `tests/` as cwd; pass `TES
 
 ## TrueCoverage Plan
 
-- **Enabled** for staging unified project `0853e684-9871-483a-bc71-ca84d922be7c`.
+- **Enabled** for staging unified project `161eddb8-16ef-4f47-b205-6caa5f03d5b9`.
 - **Instrumented events (current slice only):** `auth-session-started`, `menu-loaded`, `order-submitted-success` — see `plans/events/`.
 - RUM `environment` aligns with `TESTCHIMP_ENV` / build config (`staging` or `QA` for local Debug).
 - Mobile SmartTests: `installTestChimp(..., { uiFixture: 'screen' })` in `tests/mobile/fixtures/index.js` and `projects[].use.platform` (`ios` / `android`) in `tests/mobilewright.config.ts`. `@testchimp/playwright` ≥ **0.2.3** applies one TrueCoverage `v1/set` from the **`device`** fixture (after `launchApp`, before `screen`). Platform for `afterEach` flush comes from `projects[].use.platform`, not `TESTCHIMP_PROJECT_TYPE`.

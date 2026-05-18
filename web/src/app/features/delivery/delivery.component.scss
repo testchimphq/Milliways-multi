@@ -1,0 +1,64 @@
+.delivery {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.nebula {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 1.5rem 2rem;
+  text-align: center;
+}
+
+h1 {
+  color: #fff;
+  font-size: 1.35rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  margin: 0 0 1rem;
+  max-width: 360px;
+}
+
+.status {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin: 0 0 auto;
+}
+
+.countdown {
+  color: #fff;
+  font-family: ui-monospace, monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  margin: auto 0 1.5rem;
+}
+
+.close-btn {
+  padding: 0.75rem 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #fff;
+  }
+}

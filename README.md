@@ -2,17 +2,19 @@
 
   <img src="./docs/screenshot.png" alt width="300" align="right" style="margin-left: 3em; margin-bottom: 3em; border: 2px solid #444; border-radius: 12px; padding: 4px;" />
 
-A demo restaurant stack inspired by The Restaurant at the End of the Universe: **iOS** (SwiftUI under `ios/`), **Android** (Kotlin under `android/` when present), and a shared **Node** backend. Designed for mobile automation and [TestChimp](https://testchimp.io) demos.
+A demo restaurant stack inspired by The Restaurant at the End of the Universe: **web** (Angular under `web/`), **iOS** (SwiftUI under `ios/`), **Android** (Kotlin under `android/`), and a shared **Node** backend. Designed as a **multi-platform** [TestChimp](https://testchimp.io) demo (web + mobile).
 
 ## Repository layout
 
 | Path | Contents |
 |------|----------|
+| `web/` | **Angular** SPA — same ordering flows as mobile; TestChimp RUM via `@testchimp/rum-js` |
 | `backend/` | Node demo API and Docker image |
-| `ios/` | Xcode project, app sources, `Makefile`, and **`ios/tc-tests/`** (TestChimp SmartTests / Mobilewright). Plans: **`ios/plans/`**. |
-| `android/` | **Kotlin + Compose** app (`:app`), same flows as iOS; **`android/tests/`** (TestChimp SmartTests / Mobilewright). Plans: **`android/plans/`**. |
-| `plans/` (repo root) | Legacy markdown test plans from an earlier single-folder mapping; **canonical** plans for TestChimp live under **`ios/plans/`** and **`android/plans/`** per platform project. |
-| `scripts/` | Local CI helpers (e.g. iOS Simulator + SmartTests) |
+| `ios/` | Xcode project, app sources, `Makefile` |
+| `android/` | Kotlin + Compose app (`:app`) |
+| `plans/` | TestChimp markdown test plans (`.testchimp-plans`) |
+| `tests/` | SmartTests root (scaffold via `/testchimp test` workflow) |
+| `scripts/` | Local helpers (e.g. Mobilewright runner scripts) |
 
 ## Purpose
 
@@ -37,8 +39,9 @@ This application contains intentionally placed bugs for testing purposes.
    ```bash
    docker compose up --build -d
    ```
-3. Open `ios/Milliways.xcodeproj` in Xcode
-4. Build and run on iOS Simulator or real device
+3. **Web:** `cd web && npm install && npm start` → http://localhost:4200
+4. **iOS:** Open `ios/Milliways.xcodeproj` in Xcode and run on Simulator or device
+5. **Android:** See `android/README.md`
 
 The local API is exposed at `http://localhost:3001` and the Postgres database is exposed at `localhost:5432`. The iOS Simulator can reach the API through `localhost`; a physical device needs the Mac's LAN IP instead.
 
