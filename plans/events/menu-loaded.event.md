@@ -7,7 +7,7 @@ significance: 4
 
 ## Rationale
 
-**Runtime emit title (exact, for TrueCoverage):** `menu_loaded` — emitted from `MenuView.loadMenu()` in `MenuView.swift` after `APIClient.shared.fetchMenu()` succeeds.
+**Runtime emit title (exact, for TrueCoverage):** `menu_loaded` — iOS: `MenuView.loadMenu()` after menu API success; Android: `AppViewModel.loadMenu`; web: `MenuService.loadMenu` after `GET /menu` succeeds.
 
 This captures the moment the user can browse purchasable items. It pairs **menu breadth** (section count bucket) with **cart state** (line item count bucket) so TrueCoverage can highlight drop-offs between “menu available” and checkout, and compare production vs automation coverage for common cart/menu combinations.
 

@@ -7,7 +7,7 @@ significance: 4
 
 ## Rationale
 
-**Runtime emit title (exact, for TrueCoverage):** `auth_session_started` — passed to `MilliwaysRum.emit` in `SessionManager.swift` after `authenticate` succeeds.
+**Runtime emit title (exact, for TrueCoverage):** `auth_session_started` — iOS: `SessionManager.swift` after `authenticate` succeeds; Android: `AppViewModel.performSignIn` / `performSignUp`; web: `AuthService.signIn` / `signUp` via `MilliwaysRumService.emit`.
 
 This marks the start of an authenticated session for the Milliways demo app. It is the natural funnel entry for anything that requires a token (cart persistence in-session, order submission). Instrumenting here (rather than on every keystroke in the auth form) keeps volume low and cardinality bounded while still separating **sign-in** vs **sign-up** acquisition paths via metadata.
 

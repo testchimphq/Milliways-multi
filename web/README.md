@@ -19,7 +19,13 @@ Open [http://localhost:4200](http://localhost:4200). API calls are proxied to `h
 
 ## TestChimp TrueCoverage (RUM)
 
-Credentials and staging ingest URL are in `src/environments/environment*.ts` (demo project `161eddb8-16ef-4f47-b205-6caa5f03d5b9`). Journey events: `auth_session_started`, `menu_loaded`, `order_submitted_success` — see `plans/events/`.
+- **SDK:** `@testchimp/rum-js` (see `package.json` for pinned version)
+- **Helper:** `src/app/rum/milliways-rum.service.ts` — init at bootstrap, `platform: web` on every emit
+- **Config:** `src/environments/environment*.ts` — project id, api key, ingest URL, `testchimpEnvironment: staging`
+- **Journey events:** `auth_session_started`, `menu_loaded`, `order_submitted_success` — documented in `plans/events/`
+- **Flush:** on tab hide / `pagehide` so short sessions still upload buffered events
+
+During Playwright SmartTests, test identity is attached by `@testchimp/playwright` (`installTestChimp` in the web fixtures barrel); the app does not need extra instrumentation for that link.
 
 ## Build
 

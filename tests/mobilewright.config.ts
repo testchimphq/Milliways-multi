@@ -25,13 +25,7 @@ const config: MobilewrightConfig = {
   ],
   projects: [
     {
-      name: 'setup',
-      testDir: 'setup',
-      testMatch: /global\.setup\.spec\.(js|ts)$/,
-    },
-    {
       name: 'api',
-      dependencies: ['setup'],
       testDir: 'api',
       testMatch: '**/*.spec.{js,ts}',
       testIgnore: ['**/fixtures/**', 'web/**'],
@@ -39,13 +33,12 @@ const config: MobilewrightConfig = {
     // @testchimp-scaffold:ios-project
     {
       name: 'ios',
-      dependencies: ['setup'],
       testDir: 'mobile',
       testMatch: ['e2e/common/**/*.spec.{js,ts}', 'e2e/ios/**/*.spec.{js,ts}'],
       testIgnore: ['**/fixtures/**', '**/pages/**', '**/shared/**', 'web/**'],
       use: {
         platform: 'ios',
-        bundleId: 'com.mobilenext.milliways',
+        bundleId: 'com.mobilenext.Milliways',
         installApps: '[PATH_TO_IOS_APP]',
         actionTimeout: 15 * 1000,
       },
@@ -54,7 +47,6 @@ const config: MobilewrightConfig = {
     // @testchimp-scaffold:android-project
     {
       name: 'android',
-      dependencies: ['setup'],
       testDir: 'mobile',
       testMatch: ['e2e/common/**/*.spec.{js,ts}', 'e2e/android/**/*.spec.{js,ts}'],
       testIgnore: ['**/fixtures/**', '**/pages/**', '**/shared/**', 'web/**'],

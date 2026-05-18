@@ -9,8 +9,15 @@
  *   import { test as auth } from './auth.fixture.js';
  *   export const test = installTestChimp(mergeTests(auth));
  */
-import { test as playwrightTest } from '@playwright/test';
+import { test as base } from '@playwright/test';
 import { installTestChimp } from '@testchimp/playwright/runtime';
+import { seedQaUser } from '../../shared/seed-user.js';
 
-export const test = installTestChimp(playwrightTest);
+const testWithSeed = base.extend({
+  seedUser: async ({}, use, testInfo) => {
+    await use(await seedQaUser(testInfo));
+  },
+});
+
+export const test = installTestChimp(testWithSeed);
 export { expect } from '@playwright/test';

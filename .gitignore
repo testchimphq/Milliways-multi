@@ -1,3 +1,6 @@
+# Cursor / TestChimp (local secrets — never commit API keys)
+.cursor/mcp.json
+
 # Dependencies
 node_modules/
 web/dist/

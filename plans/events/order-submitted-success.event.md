@@ -7,7 +7,7 @@ significance: 5
 
 ## Rationale
 
-**Runtime emit title (exact, for TrueCoverage):** `order_submitted_success` — emitted from `OrderView.placeOrder()` in `OrderView.swift` after `orderManager.submitOrder(token:)` succeeds.
+**Runtime emit title (exact, for TrueCoverage):** `order_submitted_success` — iOS: `OrderView.placeOrder()` after `submitOrder` succeeds; Android: `AppViewModel.submitOrder`; web: `CartService.submitOrder` after `POST /orders` succeeds.
 
 This is the primary **conversion** signal for the ordering journey: payment processing log line is diagnostic only; the emit marks committed order creation. Metadata captures cart size bucket and whether a coupon was applied so TrueCoverage can compare completion rates and coupon slices without leaking codes (only boolean `order.has_coupon`).
 

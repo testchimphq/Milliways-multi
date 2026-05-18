@@ -1,0 +1,26 @@
+{
+  "name": "milliways-smarttests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:web": "node ../scripts/run-mobilewright-with-mcp-env.mjs --tests-root . -- playwright test -c playwright.config.js --project=web",
+    "test:ios": "node ../scripts/run-mobilewright-with-mcp-env.mjs --tests-root . -- mobilewright test -c mobilewright.config.ts --project=ios",
+    "test:android": "node ../scripts/run-mobilewright-with-mcp-env.mjs --tests-root . -- mobilewright test -c mobilewright.config.ts --project=android",
+    "build:android": "cd ../android && ./gradlew :app:assembleDebug"
+  },
+  "dependencies": {
+    "@testchimp/playwright": "^0.2.1",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@mobilewright/test": "0.0.38",
+    "@playwright/test": "1.59.1",
+    "playwright": "1.59.1",
+    "@testchimp/cli": "^0.1.6",
+    "mobilewright": "0.0.38"
+  },
+  "overrides": {
+    "@playwright/test": "1.59.1",
+    "playwright": "1.59.1"
+  }
+}

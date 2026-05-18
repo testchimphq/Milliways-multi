@@ -115,7 +115,6 @@ console.log(
 );
 
 env.TESTCHIMP_PROJECT_TYPE = env.TESTCHIMP_PROJECT_TYPE || projectType;
-env.TESTCHIMP_MOBILE_TEST_MODULE = '@mobilewright/test';
 
 if (!env.TESTCHIMP_BRANCH_NAME) {
   const g = spawnSync('git', ['-C', repoRoot, 'branch', '--show-current'], { encoding: 'utf8' });
@@ -123,9 +122,16 @@ if (!env.TESTCHIMP_BRANCH_NAME) {
   if (b) env.TESTCHIMP_BRANCH_NAME = b;
 }
 
-const mwArgs = ['mobilewright', 'test', ...passthrough];
+/** @type {string[]} */
+let npxArgs;
+if (passthrough[0] === 'playwright') {
+  npxArgs = ['playwright', ...passthrough.slice(1)];
+} else {
+  env.TESTCHIMP_MOBILE_TEST_MODULE = '@mobilewright/test';
+  npxArgs = ['mobilewright', 'test', ...passthrough];
+}
 
-const r = spawnSync('npx', mwArgs, {
+const r = spawnSync('npx', npxArgs, {
   cwd: testsRoot,
   env,
   stdio: 'inherit',
