@@ -109,6 +109,7 @@ fun MilliwaysRoot(vm: AppViewModel) {
                 composable("sign_in") { SignInRoute(nav, vm) }
                 composable("sign_up") { SignUpRoute(nav, vm) }
                 composable("welcome") { WelcomeRoute(nav, vm) }
+                composable("account") { AccountRoute(nav, vm) }
                 composable("menu") { MenuRoute(nav, vm) }
                 composable("order") { OrderRoute(nav, vm) }
                 composable("delivery") { DeliveryRoute(nav, vm) }
@@ -173,7 +174,8 @@ private fun SignInRoute(nav: NavHostController, vm: AppViewModel) {
             enabled = !vm.authLoading && email.isNotBlank() && password.isNotBlank(),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 16.dp)
+                .semantics { contentDescription = "Sign In" },
         ) {
             if (vm.authLoading) CircularProgressIndicator(Modifier.size(22.dp), color = Color.White)
             else Text("Sign In")
@@ -260,7 +262,6 @@ private fun SignUpRoute(nav: NavHostController, vm: AppViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun WelcomeRoute(nav: NavHostController, vm: AppViewModel) {
-    var accountOpen by remember { mutableStateOf(false) }
     val float = rememberInfiniteTransition(label = "hero")
     val offset by float.animateFloat(
         initialValue = 0f,
@@ -299,26 +300,49 @@ private fun WelcomeRoute(nav: NavHostController, vm: AppViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 60.dp)
-                    .padding(bottom = 24.dp)
+                    .padding(bottom = 8.dp)
                     .semantics { contentDescription = "New Order" },
                 shape = RoundedCornerShape(50),
                 colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9800)),
             ) {
                 Text("New Order", color = Color.White)
             }
+            TextButton(
+                onClick = { nav.navigate("account") },
+                modifier = Modifier.padding(bottom = 16.dp),
+            ) {
+                Text("Open Account", color = Color.White)
+            }
         }
         IconButton(
-            onClick = { accountOpen = true },
+            onClick = { nav.navigate("account") },
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(12.dp),
+                .padding(12.dp)
+                .semantics { contentDescription = "Account" },
         ) {
-            Icon(Icons.Default.Person, contentDescription = "Account", tint = Color.White)
+            Icon(Icons.Default.Person, contentDescription = null, tint = Color.White)
         }
     }
-    if (accountOpen) {
-        ModalBottomSheet(onDismissRequest = { accountOpen = false }) {
-            AccountSheet(nav, vm) { accountOpen = false }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AccountRoute(nav: NavHostController, vm: AppViewModel) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("My Account") },
+                navigationIcon = {
+                    IconButton(onClick = { nav.popBackStack() }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+            )
+        },
+    ) { padding ->
+        Box(Modifier.padding(padding)) {
+            AccountSheet(nav, vm) { nav.popBackStack() }
         }
     }
 }
@@ -331,7 +355,6 @@ private fun AccountSheet(nav: NavHostController, vm: AppViewModel, onClose: () -
         vm.orders.sumOf { it.totalCents } / 100.0
     }
     Column(Modifier.padding(16.dp)) {
-        Text("My Account", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
         Row(
             Modifier
                 .fillMaxWidth()
@@ -344,9 +367,7 @@ private fun AccountSheet(nav: NavHostController, vm: AppViewModel, onClose: () -
                     profileEmail,
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .testTag("account_profile_email")
-                        .semantics { contentDescription = profileEmail },
+                    modifier = Modifier.testTag("account_profile_email"),
                 )
                 Text("Pro Cosmic Foodie", color = Color(0xFFFF9800), style = MaterialTheme.typography.bodyMedium)
             }

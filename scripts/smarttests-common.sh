@@ -68,8 +68,9 @@ smarttests_install_deps() {
 smarttests_wait_for_url() {
   local url="$1"
   local label="${2:-$url}"
+  local max_attempts="${3:-60}"
   echo "==> Waiting for $label"
-  for _ in {1..60}; do
+  for ((attempt = 1; attempt <= max_attempts; attempt++)); do
     if curl -fsS "$url" >/dev/null 2>&1; then
       return 0
     fi
@@ -79,9 +80,72 @@ smarttests_wait_for_url() {
   return 1
 }
 
+SMARTTESTS_WEB_PID=""
+SMARTTESTS_WEB_STARTED_BY_SCRIPT=false
+
+smarttests_cleanup_web_dev_server() {
+  if [[ "$SMARTTESTS_WEB_STARTED_BY_SCRIPT" == true && -n "$SMARTTESTS_WEB_PID" ]]; then
+    echo "==> Stopping web dev server (pid $SMARTTESTS_WEB_PID)"
+    kill "$SMARTTESTS_WEB_PID" 2>/dev/null || true
+    wait "$SMARTTESTS_WEB_PID" 2>/dev/null || true
+  fi
+}
+
+# Stop any process listening on the web dev port so `ng serve` picks up dependency changes.
+smarttests_stop_web_dev_server_on_port() {
+  local port="${1:-4200}"
+  if ! command -v lsof >/dev/null 2>&1; then
+    return 0
+  fi
+  local pids
+  pids="$(lsof -tiTCP:"$port" -sTCP:LISTEN 2>/dev/null || true)"
+  if [[ -z "$pids" ]]; then
+    return 0
+  fi
+  echo "==> Stopping process(es) on port $port ($pids) for fresh web bundle"
+  # shellcheck disable=SC2086
+  kill $pids 2>/dev/null || true
+  sleep 1
+}
+
+# Start `ng serve` when BASE_URL is not already up (web SmartTests only).
+smarttests_ensure_web_dev_server() {
+  local base_url="${1:-http://localhost:4200}"
+
+  echo "==> Installing web dependencies"
+  if [[ -f "$SMARTTESTS_ROOT/web/package-lock.json" ]]; then
+    npm ci --prefix "$SMARTTESTS_ROOT/web"
+  else
+    npm install --prefix "$SMARTTESTS_ROOT/web"
+  fi
+
+  # Always restart so @testchimp/rum-js updates are bundled (stale ng serve skips npm ci otherwise).
+  smarttests_stop_web_dev_server_on_port "${base_url##*:}"
+
+  if curl -fsS "${base_url}/" >/dev/null 2>&1; then
+    echo "==> Web app already running at $base_url"
+    return 0
+  fi
+
+  local log_file="$SMARTTESTS_ROOT/.web-dev-server.log"
+  echo "==> Starting web dev server (npm start) — log: $log_file"
+  (cd "$SMARTTESTS_ROOT/web" && npm start) >"$log_file" 2>&1 &
+  SMARTTESTS_WEB_PID=$!
+  SMARTTESTS_WEB_STARTED_BY_SCRIPT=true
+  trap smarttests_cleanup_web_dev_server EXIT INT TERM
+
+  if ! smarttests_wait_for_url "${base_url}/" "web app ($base_url)" 90; then
+    echo "Web dev server did not become ready. Last lines of $log_file:" >&2
+    tail -40 "$log_file" >&2 || true
+    exit 1
+  fi
+}
+
 smarttests_run_with_mcp_env() {
+  # Runner args (playwright/mobilewright) follow wrapper flags; do not use `--` here or
+  # `--project-type` and similar would be passed to Playwright/Mobilewright instead.
   node "$SMARTTESTS_ROOT/scripts/run-mobilewright-with-mcp-env.mjs" \
     --mcp-json "$SMARTTESTS_MCP_JSON" \
     --tests-root "$SMARTTESTS_TESTS_DIR" \
-    -- "$@"
+    "$@"
 }

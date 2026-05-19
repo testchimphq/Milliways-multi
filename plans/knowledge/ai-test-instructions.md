@@ -54,13 +54,13 @@
 SmartTests root is **`tests/`** at the **repo root** (scaffold via `/testchimp test`; `project_type=multi-platform`).
 
 1. **Backend** (repo root): `docker compose up --build -d` then `curl -fsS http://localhost:3001/health`
-2. **Web app:** `cd web && npm install && npm start` → `http://localhost:4200` (proxies API to `:3001`)
+2. **Web app:** `./scripts/run-smarttests-web.sh` starts `ng serve` automatically if `:4200` is down (log: `.web-dev-server.log`; stops the server when the script exits). Or run `cd web && npm start` yourself first.
 3. **iOS app:** `cd ios && make build` → `ios/build/Build/Products/Debug-iphonesimulator/Milliways.app`
 4. **Android APK:** `cd android && ./gradlew :app:assembleDebug`
 4. **Run** (repo root — recommended):
 
 ```bash
-./scripts/run-smarttests-web.sh    # Playwright — start web first: cd web && npm start
+./scripts/run-smarttests-web.sh    # Playwright — starts Docker + ng serve when needed
 ./scripts/run-smarttests-ios.sh
 ./scripts/run-smarttests-android.sh
 ```
@@ -128,6 +128,10 @@ Deferred. When enabled, use macOS for iOS Simulator + `tests/` as cwd; pass `TES
 ### Q: Seed user fails
 
 **A:** Ensure Docker backend is up and `curl -fsS http://localhost:3001/health` succeeds before running tests.
+
+### Q: Web SmartTests pass but no rows in staging `rum_events`
+
+**A:** (1) **Ingest URL** is `environment.testchimpEndpoint` → `https://featureservice-staging.testchimp.io` (not `TESTCHIMP_BACKEND_URL`, which is for the Playwright reporter only). Filter TrueCoverage on **`environment` = `staging`**. (2) **Libraries only:** **`@testchimp/playwright` ≥ 0.2.4** flushes rum-js in web `afterEach` via `globalThis.__TC_RUM_FLUSH` (no app/test flush helpers). **`@testchimp/rum-js` ≥ 0.1.3** exposes that hook; production `emit` batching is unchanged. (3) **Stale `ng serve`:** `./scripts/run-smarttests-web.sh` runs `npm ci` in `web/`, stops port 4200, and restarts the dev server.
 
 ### Q: Docker `Bind for 0.0.0.0:5432 failed: port is already allocated`
 

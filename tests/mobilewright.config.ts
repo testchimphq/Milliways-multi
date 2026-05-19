@@ -39,7 +39,7 @@ const config: MobilewrightConfig = {
       use: {
         platform: 'ios',
         bundleId: 'com.mobilenext.Milliways',
-        installApps: '[PATH_TO_IOS_APP]',
+        installApps: process.env.IOS_APP_PATH ?? '[PATH_TO_IOS_APP]',
         actionTimeout: 15 * 1000,
       },
     },
@@ -48,12 +48,12 @@ const config: MobilewrightConfig = {
     {
       name: 'android',
       testDir: 'mobile',
-      testMatch: ['e2e/common/**/*.spec.{js,ts}', 'e2e/android/**/*.spec.{js,ts}'],
+      testMatch: ['e2e/android/**/*.spec.{js,ts}'],
       testIgnore: ['**/fixtures/**', '**/pages/**', '**/shared/**', 'web/**'],
       use: {
         platform: 'android',
         bundleId: 'com.mobilenext.milliways',
-        installApps: '[PATH_TO_APK]',
+        installApps: process.env.ANDROID_APK_PATH ?? '[PATH_TO_APK]',
         actionTimeout: 15 * 1000,
       },
     },

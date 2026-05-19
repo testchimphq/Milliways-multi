@@ -2,7 +2,7 @@
  * Master Playwright test entry for SmartTests (TestChimp runtime: TrueCoverage CI metadata,
  * markScreenState fixture, ExploreChimp when enabled).
  *
- * Requires @testchimp/playwright >= 0.1.8 (installTestChimp).
+ * Requires @testchimp/playwright >= 0.2.6 (installTestChimp).
  * Add domain fixtures with mergeTests, then wrap the merged test (use the same runner package as below:
  * `@playwright/test` for web, `@mobilewright/test` for Android/iOS):
  *   import { mergeTests } from '@playwright/test'; // or '@mobilewright/test'

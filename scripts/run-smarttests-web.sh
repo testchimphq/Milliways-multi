@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # Run web SmartTests (Playwright) from repo-root tests/.
 #
-# Prerequisites: Docker, Node.js. Starts the API via Docker; expects the Angular
-# dev server at BASE_URL (default http://localhost:4200 from tests/.env-QA).
+# Prerequisites: Docker, Node.js. Starts Docker API + Angular dev server (if not
+# already running at BASE_URL, default http://localhost:4200 from tests/.env-QA).
 #
 # Usage (from repo root):
 #   ./scripts/run-smarttests-web.sh
 #   ./scripts/run-smarttests-web.sh --grep "main dishes"
 #   ./scripts/run-smarttests-web.sh web/e2e/menu.spec.js
+#   ./scripts/run-smarttests-web.sh --headed --workers 1
 #
 set -euo pipefail
 
@@ -23,10 +24,7 @@ smarttests_start_backend
 : "${BASE_URL:=http://localhost:4200}"
 export BASE_URL
 
-if ! smarttests_wait_for_url "$BASE_URL/" "web app ($BASE_URL)"; then
-  echo "Start the web app in another terminal: cd web && npm install && npm start" >&2
-  exit 1
-fi
+smarttests_ensure_web_dev_server "$BASE_URL"
 
 smarttests_install_deps
 
